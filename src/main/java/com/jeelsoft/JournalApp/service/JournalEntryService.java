@@ -37,4 +37,9 @@ public class JournalEntryService {
          journalEntryRepository.deleteById(id);
     }
 
+
+
+    public void saveEntry(JournalEntry journalEntry){
+        journalEntryRepository.save(journalEntry);
+    }
 }

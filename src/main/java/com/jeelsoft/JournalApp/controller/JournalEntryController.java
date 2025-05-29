@@ -57,25 +57,22 @@ public class JournalEntryController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-//    @PutMapping("/id/{myId}")
-//    public ResponseEntity<JournalEntry> updateJournalEntryById(@PathVariable ObjectId myId,@RequestBody JournalEntry newEntry) {
-//        JournalEntry oldEntry = journalEntryService.findById(myId).orElse(null);
-//        if (oldEntry != null) {
-//            // Only update title if it's not null or empty
-//            if (newEntry.getTitle() != null && !newEntry.getTitle().trim().isEmpty()) {
-//                oldEntry.setTitle(newEntry.getTitle());
-//            }
-//
-//            /* Only update content if it's not null or empty */
-//            if (newEntry.getContent() != null && !newEntry.getContent().trim().isEmpty()) {
-//                oldEntry.setContent(newEntry.getContent());
-//                return  new ResponseEntity<>(oldEntry,HttpStatus.OK);
-//            }
-//
-//            journalEntryService.saveEntry(oldEntry, user);
-//        }
-//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
+
+    @PutMapping("/id/{userName}/{myId}")
+    public ResponseEntity<JournalEntry> updateJournalEntryById(
+            @PathVariable ObjectId myId,
+            @PathVariable String userName,
+            @RequestBody JournalEntry newEntry) {
+        JournalEntry old = journalEntryService.findById(myId).orElse(null);
+        if (old != null) {
+            // Only update title if it's not null or empty
+           old.setTitle(newEntry.getTitle()!=null && !newEntry.getTitle().equals("")?newEntry.getTitle(): old.getTitle());
+           old.setContent(newEntry.getContent() !=null && !newEntry.getContent().equals("")?newEntry.getContent():old.getContent());
+
+            journalEntryService.saveEntry(old);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
 }
 

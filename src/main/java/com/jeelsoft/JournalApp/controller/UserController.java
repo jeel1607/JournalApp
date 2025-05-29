@@ -2,6 +2,7 @@ package com.jeelsoft.JournalApp.controller;
 
 import com.jeelsoft.JournalApp.entity.User;
 import com.jeelsoft.JournalApp.service.UserService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,10 @@ public class    UserController {
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
+    @DeleteMapping("/{userid}")
+    public ResponseEntity<?> deleteUserById(@PathVariable ObjectId userid) {
+        userService.deleteById(userid);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
 
